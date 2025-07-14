@@ -1,0 +1,26 @@
+
+    .navbar-transparent {
+        background-color: transparent;
+        transition: background-color 0.3s ease;
+    }
+
+    .navbar-scrolled {
+        background-color: #003366 !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    }
+
+
+    .btn-glass {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+}
+
+.btn-glass:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    color: #fff;
+}
