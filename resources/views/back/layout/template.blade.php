@@ -1,6 +1,83 @@
 <!doctype html>
 <html lang="en">
 
+<style>
+    body {
+        background-color: #003569ff;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #ffffffff;
+    }
+
+    /* Navbar */
+    header.navbar {
+        background-color: #002a55ff !important;
+        color: #ffffffff;
+    }
+
+    header.navbar .navbar-brand {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    /* Card Style */
+    .card {
+        border: none;
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .card-title {
+        font-weight: 600;
+        color: #00274e;
+    }
+
+    input[placeholder="Search"]::placeholder {
+        color: white;
+        opacity: 1;
+    }
+
+
+    /* Sidebar */
+    #sidebarMenu {
+        background-color: #ffffffff;
+    }
+
+    #sidebarMenu .nav-link {
+        color: #000000ff;
+        font-weight: 500;
+        border-radius: 6px;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    #sidebarMenu .nav-link:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+        color: #01294e;
+    }
+
+    /* Search Box */
+    .form-control-dark {
+        background-color: #01294e;
+        color: #fff;
+        border: none;
+    }
+
+    .form-control-dark:focus {
+        background-color: #02315e;
+        color: #fff;
+        box-shadow: none;
+    }
+</style>
+
+
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="utf-8">
@@ -39,7 +116,7 @@
 <body>
 
     <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">Company name</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="dashboard">Knowledge Management</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse"
             data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -48,8 +125,9 @@
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
-                <a class="nav-link px-3" href="#">Sign out</a>
+                <a class="nav-link px-3" href="login" style="color: white;">Sign out</a>
             </div>
+
         </div>
     </header>
 

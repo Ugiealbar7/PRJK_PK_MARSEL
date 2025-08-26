@@ -8,29 +8,33 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('projects') }}">
+                <a class="nav-link active" href="{{ url('projects') }}">
                     <span data-feather="file"></span>
                     Manajemen Proyek
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ url('categories') }}">
+                <a class="nav-link active" href="{{ url('categories') }}">
                     <span data-feather="shopping-cart"></span>
-                    Categoris
+                    Categories
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link active" href="#">
                     <span data-feather="users"></span>
                     Users
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="bar-chart-2"></span>
-                    Logout
-                </a>
-            </li>
+           <li class="nav-item">
+    <form action="{{ route('admin.logout') }}" method="POST" style="display:inline;">
+        @csrf
+        <button type="submit" class="nav-link btn btn-link active" style="text-decoration:none;">
+            <span data-feather="bar-chart-2"></span>
+            Logout
+        </button>
+    </form>
+</li>
+
         </ul>
     </div>
 </nav>

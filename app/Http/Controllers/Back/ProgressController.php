@@ -12,36 +12,7 @@ class ProgressController extends Controller
 {
     public function index(Project $project)
     {
-        return view('back.progress.index', [
-            'project' => $project
-        ]);
-    }
-
-    public function store(Request $request, Project $project)
-    {
-        // Validasi input
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'week' => 'required|string|max:255',
-            'description' => 'required|string',
-            'video' => 'nullable|mimes:mp4,avi,mov|max:50000', // Max 50MB
-        ]);
-
-        // Upload video
-        if ($request->hasFile('video')) {
-            $file = $request->file('video');
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-            $file->storeAs('public/videos', $fileName);
-            $data['video_path'] = $fileName;
-        }
-
-        // Simpan data
-        $data['project_id'] = $project->id; // ✅ AMBIL ID-nya DARI MODEL
-        Progress::create($data);
-
-        // Redirect
-        return redirect()->route('progress.index', $project->id)
-            ->with('success', 'Progress berhasil ditambahkan.');
+        return view('back.progress.index', compact('project'));
     }
 
     public function create(Project $project)
@@ -49,15 +20,32 @@ class ProgressController extends Controller
         return view('back.progress.create', compact('project'));
     }
 
-    public function destroy(Progress $progress)
+    public function store(Request $request, Project $project)
     {
-        if ($progress->video_path && \Storage::exists('public/videos/' . $progress->video_path)) {
-            \Storage::delete('public/videos/' . $progress->video_path);
+        $request->validate([
+            'title'       => 'required|string|max:255',
+            'week'        => 'nullable|string|max:50',
+            'description' => 'nullable|string',
+            'video'       => 'nullable|mimetypes:video/mp4,video/avi,video/mpeg,video/mov|max:50000', // 50MB
+        ]);
+
+        $progress = new Progress();
+        $progress->project_id  = $project->id;
+        $progress->title       = $request->title;
+        $progress->week        = $request->week;
+        $progress->description = $request->description;
+
+        if ($request->hasFile('video')) {
+            $file     = $request->file('video');
+            $fileName = uniqid('vid_') . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/videos', $fileName);
+            $progress->video_path = $fileName;
         }
 
-        $progress->delete();
+        $progress->save();
 
-        return response()->json(['message' => 'Progress berhasil dihapus']);
+        return redirect()->route('progress.index', $project->id)
+            ->with('success', 'Progress berhasil ditambahkan.');
     }
 
     public function edit(Progress $progress)
@@ -67,27 +55,30 @@ class ProgressController extends Controller
 
     public function update(Request $request, Progress $progress)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'week' => 'required|string|max:255',
-            'description' => 'required|string',
-            'video' => 'nullable|mimes:mp4,avi,mov|max:50000',
+        $request->validate([
+            'title'       => 'required|string|max:255',
+            'week'        => 'nullable|string|max:50',
+            'description' => 'nullable|string',
+            'video'       => 'nullable|mimetypes:video/mp4,video/avi,video/mpeg,video/mov|max:50000',
         ]);
 
-        // Ganti video kalau ada yang baru
+        $progress->title       = $request->title;
+        $progress->week        = $request->week;
+        $progress->description = $request->description;
+
         if ($request->hasFile('video')) {
-            // Hapus video lama
-            if ($progress->video_path) {
-                \Storage::delete('public/videos/' . $progress->video_path);
+            // Hapus video lama jika ada
+            if ($progress->video_path && Storage::exists('public/videos/' . $progress->video_path)) {
+                Storage::delete('public/videos/' . $progress->video_path);
             }
 
-            $file = $request->file('video');
-            $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
+            $file     = $request->file('video');
+            $fileName = uniqid('vid_') . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public/videos', $fileName);
-            $data['video_path'] = $fileName;
+            $progress->video_path = $fileName;
         }
 
-        $progress->update($data);
+        $progress->save();
 
         return redirect()->route('progress.index', $progress->project_id)
             ->with('success', 'Progress berhasil diperbarui.');
@@ -98,5 +89,14 @@ class ProgressController extends Controller
         return view('back.progress.show', compact('progress'));
     }
 
+    public function destroy(Progress $progress)
+    {
+        if ($progress->video_path && Storage::exists('public/videos/' . $progress->video_path)) {
+            Storage::delete('public/videos/' . $progress->video_path);
+        }
 
+        $progress->delete();
+
+        return response()->json(['message' => 'Progress berhasil dihapus']);
+    }
 }

@@ -4,21 +4,29 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Project extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['category_id', 'title', 'slug', 'desc', 'img', 'status', 'views', 'publish_date'];
+    protected $fillable = [
+        'title',
+        'slug',
+        'desc',
+        'img',
+        'publish_date',
+        'status',
+        'category_id',
+        'views'
+    ];
 
-    //relasi ke Category
-    public function Category(): BelongsTo
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function progresses()
+    // Tambahkan relasi ini
+   public function progresses()
 {
     return $this->hasMany(Progress::class);
 }
