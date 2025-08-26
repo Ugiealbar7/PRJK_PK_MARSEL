@@ -14,9 +14,7 @@ use App\Http\Requests\UpdateProjectRequest;
 
 class ProjectController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
         if (request()->ajax()) {
@@ -69,21 +67,37 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProjectRequest $request)
-    {
-        $data = $request->validated();
+public function store(Request $request)
+{
+    // Validasi input form
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'category_id' => 'required|exists:categories,id',
+        'desc' => 'required|string',
+        'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'status' => 'required|in:0,1',
+        'publish_date' => 'required|date',
+    ]);
 
-        $file = $request->file('img');
-        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public/back', $fileName);
+    $project = new Project();
+    $project->title = $request->title;
+    $project->category_id = $request->category_id;
+    $project->desc = $request->desc;
 
-        $data['img'] = $fileName;
-        $data['slug'] = Str::slug($data['title']);
-
-        Project::create($data);
-
-        return redirect(url('projects'))->with('success', 'Data project has been created');
+    if ($request->hasFile('img')) {
+        $path = $request->file('img')->store('back', 'public'); // simpan di storage/app/public/back
+        $project->img = basename($path);
     }
+
+    $project->slug = \Illuminate\Support\Str::slug($request->title);
+    $project->status = $request->status;
+    $project->publish_date = $request->publish_date;
+    $project->views = 0; // default views
+
+    $project->save();
+
+    return redirect()->route('projects.index')->with('success', 'Project berhasil dibuat.');
+}
 
     /**
      * Display the specified resource.
@@ -149,4 +163,10 @@ class ProjectController extends Controller
         ]);
 
     }
+
+    public function progress()
+{
+    return $this->hasMany(\App\Models\Progress::class);
+}
+
 }
