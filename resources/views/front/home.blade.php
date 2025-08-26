@@ -147,9 +147,15 @@
 
 <!-- HERO SECTION -->
 <div class="hero-banner mb-5">
+<<<<<<< HEAD
     <img src="{{ asset('storage/banners/gambar1.jpg') }}" class="active" alt="Banner 1">
     <img src="{{ asset('storage/banners/gambar2.jpg') }}" alt="Banner 2">
     <img src="{{ asset('storage/banners/gambar3.jpg') }}" alt="Banner 3">
+=======
+    <img src="{{ asset('storage/back/gambar1.jpg') }}" class="active" alt="Banner 1">
+    <img src="{{ asset('storage/back/gambar2.jpg') }}" alt="Banner 2">
+    <img src="{{ asset('storage/back/gambar3.jpg') }}" alt="Banner 3">
+>>>>>>> 4674b9287c573940fea55eb1b53314b324ebd7b3
     <div class="hero-overlay">
         <h1>📊 Dashboard Proyek Konstruksi</h1>
         <p>Pantau perkembangan proyek secara real-time & transparan</p>

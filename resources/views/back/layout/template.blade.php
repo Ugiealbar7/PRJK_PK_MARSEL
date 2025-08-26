@@ -125,7 +125,11 @@
         <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
         <div class="navbar-nav">
             <div class="nav-item text-nowrap">
+<<<<<<< HEAD
                 <a class="nav-link px-3" href="login" style="color: white;">Sign out</a>
+=======
+                <a class="nav-link px-3" href="#" style="color: white;">Sign out</a>
+>>>>>>> 4674b9287c573940fea55eb1b53314b324ebd7b3
             </div>
 
         </div>
