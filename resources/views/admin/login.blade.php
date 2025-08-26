@@ -33,7 +33,7 @@
         .login-image {
             flex: 1;
             position: relative;
-            background: url('{{ asset('storage/back/gambar3.jpg') }}') center/cover no-repeat;
+            background: url('{{ asset('storage/login/gambar3.jpg') }}') center/cover no-repeat;
             animation: slideInLeft 1.2s ease forwards;
         }
 
