@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    {{-- ✅ NAVBAR DIPASANG DI SINI --}}
+    {{-- ✅ NAVBAR DIPASANG DI SINI --}}A
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ route('home') }}">ProyekKonstruksi</a>
@@ -38,11 +38,11 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/layanan') }}">Layanan</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/kontak') }}">Kontak</a>
-                    </li>
+                
                 </ul>
-                <a href="{{ url('/dashboard') }}" class="btn btn-outline-light ms-3">Login Admin</a>
+              <!-- Tombol Login Admin -->
+<a href="{{ route('admin.login') }}" class="btn btn-outline-light ms-3">Login Admin</a>
+
             </div>
         </div>
     </nav>

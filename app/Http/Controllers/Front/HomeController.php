@@ -4,14 +4,17 @@ namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Project; // <-- tambahkan ini
 
 class HomeController extends Controller
 {
     public function index()
     {
-        $totalProjects = \App\Models\Project::where('status', 0)->count();
-        $totalProgress = \App\Models\Progress::count();
+        $latestProjects = Project::where('status', 1) // filter proyek terbaru
+                            ->latest()
+                            ->take(6)
+                            ->get();
 
-        return view('front.home', compact('totalProjects', 'totalProgress'));
+        return view('front.home', compact('latestProjects'));
     }
 }

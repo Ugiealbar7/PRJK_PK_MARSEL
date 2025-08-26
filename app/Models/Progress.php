@@ -12,7 +12,9 @@ class Progress extends Model
     protected $fillable = ['project_id', 'title', 'week', 'description', 'video_path'];
 
     public function project()
-    {
-        return $this->belongsTo(Project::class);
-    }
+{
+    return $this->belongsTo(Project::class);
+}
+
+
 }
